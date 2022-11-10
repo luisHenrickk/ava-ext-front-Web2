@@ -1,0 +1,17 @@
+button{
+  background-color: rgb(1, 42, 251);
+  color:rgb(255, 251, 251);
+  border:none;
+  width: 8%;
+  padding: 10px;
+  font-weight: bold;
+  border-radius: 10%;
+}
+button:hover{
+  box-shadow: 2px 2px 2px 1px rgba(255, 255, 255, 0.482);
+  transform: scale(0.9);
+  transition: 500ms;
+}
+mat-card{
+  margin:1%;
+}

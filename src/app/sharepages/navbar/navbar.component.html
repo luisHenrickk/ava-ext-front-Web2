@@ -1,0 +1,32 @@
+<mat-sidenav-container class="container">
+  <mat-sidenav
+    class="sidenav"
+    mode="side"
+    opened
+    fixedInViewport="true"
+    fixedTopGap="64"
+  >
+    <mat-nav-list class="nav-list">
+      <a mat-list-item routerLink="">
+        <i class="material-icons">home</i>
+        Inicio</a
+      >
+      <mat-divider></mat-divider>
+      <a mat-list-item routerLink="/cursoProfessor"
+        ><i class="material-icons">dvr</i> Cursos</a
+      >
+
+      <mat-divider></mat-divider>
+      <a mat-list-item routerLink="/states"
+        ><i class="material-icons">assignment</i>Avaliação</a
+      >
+      <mat-divider></mat-divider>
+      <a mat-list-item routerLink="/bank-branches"
+        ><i class="material-icons">work</i>Ofertas de cursos</a
+      >
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content class="content">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
