@@ -23,16 +23,14 @@ import {
 } from 'rxjs';
 import { Curso } from 'src/app/models/curso.model';
 import { CursoService } from '../../services/curso.service';
-import { ProfessorCursoDeleteComponent } from '../curso-delete/professor-curso-delete.component';
+import { CursoDeleteComponent } from '../curso-delete/curso-delete.component';
 
 @Component({
-  selector: 'app-professor-curso',
-  templateUrl: './professor-curso.component.html',
-  styleUrls: ['./professor-curso.component.scss'],
+  selector: 'app-curso',
+  templateUrl: './curso.component.html',
+  styleUrls: ['./curso.component.scss'],
 })
-export class ProfessorCursoComponent
-  implements OnInit, AfterViewInit, OnDestroy
-{
+export class CursoComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   isLoadingResults: boolean = true;
@@ -98,7 +96,7 @@ export class ProfessorCursoComponent
   }
 
   openDeleteDialog(curso: Curso): void {
-    const dialogRef = this.dialog.open(ProfessorCursoDeleteComponent, {
+    const dialogRef = this.dialog.open(CursoDeleteComponent, {
       data: curso,
     });
     dialogRef.afterClosed().subscribe((result) => {

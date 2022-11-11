@@ -8,11 +8,11 @@ import { CursoService } from '../../services/curso.service';
 import { ProfessorService } from '../../services/professor.service';
 
 @Component({
-  selector: 'app-professor-curso-create',
-  templateUrl: './professor-curso-create.component.html',
-  styleUrls: ['./professor-curso-create.component.scss'],
+  selector: 'app-curso-create',
+  templateUrl: './curso-create.component.html',
+  styleUrls: ['./curso-create.component.scss'],
 })
-export class ProfessorCursoCreateComponent implements OnInit {
+export class CursoCreateComponent implements OnInit {
   professores: Professor[] = [];
   form: FormGroup = new FormGroup({});
   constructor(

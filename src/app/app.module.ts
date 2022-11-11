@@ -24,13 +24,13 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppRedDirective } from './directives/appRed.directive';
-import { ProfessorCursoComponent } from './pages/curso/curso-list/professor-curso.component';
-import { ProfessorHomeComponent } from './pages/home/professor-home.component';
+import { CursoComponent } from './pages/curso/curso-list/curso.component';
+import { HomeComponent } from './pages/home/home.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
-import { ProfessorCursoCreateComponent } from './pages/curso/curso-create/professor-curso-create.component';
-import { ProfessorCursoDeleteComponent } from './pages/curso/curso-delete/professor-curso-delete.component';
+import { CursoCreateComponent } from './pages/curso/curso-create/curso-create.component';
+import { CursoDeleteComponent } from './pages/curso/curso-delete/curso-delete.component';
 import { PageComponent } from './layout/page/page.component';
 import { LoginComponent } from './pages/login/login.component';
 import { JwtAuthInterceptor } from './interceptors/jwt-auth.interceptor';
@@ -41,11 +41,11 @@ import { JwtAuthInterceptor } from './interceptors/jwt-auth.interceptor';
     NavbarComponent,
     FooterComponent,
     HeaderComponent,
-    ProfessorHomeComponent,
-    ProfessorCursoComponent,
+    HomeComponent,
+    CursoComponent,
     AppRedDirective,
-    ProfessorCursoCreateComponent,
-    ProfessorCursoDeleteComponent,
+    CursoCreateComponent,
+    CursoDeleteComponent,
     PageComponent,
     LoginComponent,
   ],
