@@ -3,9 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ProfessorCursoCreateComponent } from './pages/curso/professor-curso-create/professor-curso-create.component';
 import { ProfessorCursoComponent } from './pages/curso/professor-curso/professor-curso.component';
+import { LoginComponent } from './pages/login/login.component';
 import { ProfessorHomeComponent } from './pages/professor-home/professor-home.component';
 
 const routes: Routes = [
+  { path: 'login', component: LoginComponent },
   { path: '', component: ProfessorHomeComponent },
   {
     path: 'cursoProfessor',

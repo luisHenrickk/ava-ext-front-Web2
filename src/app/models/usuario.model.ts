@@ -3,4 +3,6 @@ export interface Usuario {
   email: string;
   senha?: string;
   role: string;
+  access_token?: string;
+  token_type?: string;
 }
