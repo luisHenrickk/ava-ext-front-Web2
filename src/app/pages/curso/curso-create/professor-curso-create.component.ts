@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { catchError } from 'rxjs';
 import { Curso } from 'src/app/models/curso.model';
 import { Professor } from 'src/app/models/professor.model';
-import { CursoService } from '../curso.service';
-import { ProfessorService } from '../professor.service';
+import { CursoService } from '../../services/curso.service';
+import { ProfessorService } from '../../services/professor.service';
 
 @Component({
   selector: 'app-professor-curso-create',
@@ -25,13 +25,16 @@ export class ProfessorCursoCreateComponent implements OnInit {
   ngOnInit(): void {
     this.professorService.list().subscribe((resp) => {
       this.professores = resp;
+      console.log(this.professores);
+
       this.professores.sort((a: Professor, b: Professor) =>
-        a.name.localeCompare(b.name)
+        a.nome.localeCompare(b.nome)
       );
     });
     this.form = this.fb.group({
       descricao: [null, [Validators.required]],
       area: [null, [Validators.required]],
+      professor: [null, [Validators.required]],
     });
   }
 

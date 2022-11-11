@@ -32,7 +32,7 @@
       <mat-label>Professor</mat-label>
       <mat-select name="professor" formControlName="professor">
         <mat-option *ngFor="let professor of professores" [value]="professor">
-          {{ professor.name }}
+          {{ professor.nome }}
         </mat-option>
       </mat-select>
       <mat-error *ngIf="form.get('professsor')?.hasError('required')">

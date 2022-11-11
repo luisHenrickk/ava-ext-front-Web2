@@ -1,4 +1,5 @@
-import { NgModule } from '@angular/core';
+import { JsonDateInterceptor } from './interceptors/json-date.interceptor';
+import { LOCALE_ID, NgModule } from '@angular/core';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -18,20 +19,21 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppRedDirective } from './directives/appRed.directive';
-import { ProfessorCursoComponent } from './pages/curso/professor-curso/professor-curso.component';
-import { ProfessorHomeComponent } from './pages/professor-home/professor-home.component';
+import { ProfessorCursoComponent } from './pages/curso/curso-list/professor-curso.component';
+import { ProfessorHomeComponent } from './pages/home/professor-home.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
-import { ProfessorCursoCreateComponent } from './pages/curso/professor-curso-create/professor-curso-create.component';
-import { ProfessorCursoDeleteComponent } from './pages/curso/professor-curso-delete/professor-curso-delete.component';
+import { ProfessorCursoCreateComponent } from './pages/curso/curso-create/professor-curso-create.component';
+import { ProfessorCursoDeleteComponent } from './pages/curso/curso-delete/professor-curso-delete.component';
 import { PageComponent } from './layout/page/page.component';
 import { LoginComponent } from './pages/login/login.component';
+import { JwtAuthInterceptor } from './interceptors/jwt-auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -67,7 +69,11 @@ import { LoginComponent } from './pages/login/login.component';
     MatCardModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtAuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: JsonDateInterceptor, multi: true },
+    { provide: LOCALE_ID, useValue: 'pt-BR' },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -4,7 +4,7 @@ import { Telefone } from './telefone.model';
 import { Usuario } from './usuario.model';
 
 export interface Professor extends Usuario {
-  name: string;
+  nome: string;
   cpf: string;
   dataNasc: string;
   graduacao: string;

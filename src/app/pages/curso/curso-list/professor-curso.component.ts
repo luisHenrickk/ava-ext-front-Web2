@@ -22,8 +22,8 @@ import {
   switchMap,
 } from 'rxjs';
 import { Curso } from 'src/app/models/curso.model';
-import { CursoService } from '../curso.service';
-import { ProfessorCursoDeleteComponent } from '../professor-curso-delete/professor-curso-delete.component';
+import { CursoService } from '../../services/curso.service';
+import { ProfessorCursoDeleteComponent } from '../curso-delete/professor-curso-delete.component';
 
 @Component({
   selector: 'app-professor-curso',

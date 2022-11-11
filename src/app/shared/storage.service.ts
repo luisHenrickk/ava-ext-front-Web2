@@ -32,7 +32,7 @@ export class StorageService {
       return obj.value;
     }
 
-    return !dayjs().isBefore(new Date(obj.expires)) ? obj.value : null;
+    return dayjs().isBefore(new Date(obj.expires)) ? obj.value : null;
   }
 
   isExpired(key: string): boolean {
