@@ -18,7 +18,7 @@ const routes: Routes = [
     children: [
       { path: '', component: HomeComponent },
       {
-        path: 'cursoProfessor',
+        path: 'curso',
         children: [
           { path: '', component: CursoComponent },
           { path: 'create', component: CursoCreateComponent },

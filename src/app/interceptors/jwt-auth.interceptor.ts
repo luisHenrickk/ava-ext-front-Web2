@@ -11,6 +11,8 @@ import {
 import { Observable } from 'rxjs';
 import { AuthenticationService } from '../shared/authentication.service';
 
+export const InterceptorSkipHeader = 'X-Skip-Interceptor';
+
 @Injectable()
 export class JwtAuthInterceptor implements HttpInterceptor {
   constructor(
@@ -23,23 +25,15 @@ export class JwtAuthInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     const user = this.authenticationService.getCurrentUserValue();
+    if (request.headers.has(InterceptorSkipHeader)) {
+      return next.handle(request);
+    }
+
     if (!user || !user.access_token || user.access_token.length == 0) {
-      if (request.url.includes('/login') || request.url.includes('/user')) {
-        return next.handle(request);
-      }
-      return next.handle(request).pipe(
-        map(() => {
-          this.messageService.error(
-            'O token de autenticação expirou. Por favor, faça o login novamente.'
-          );
-          throw new HttpErrorResponse({
-            error:
-              'O token de autenticação expirou. Por favor, faça o login novamente.',
-            status: 401,
-            statusText: 'Unauthorized',
-          });
-        })
+      this.messageService.error(
+        'O token de autenticação expirou. Por favor, faça o login novamente.'
       );
+      return next.handle(request);
     } else {
       const modified = request.clone({
         setHeaders: {
