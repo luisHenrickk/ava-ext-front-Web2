@@ -55,7 +55,7 @@ export class CursoCreateComponent implements OnInit {
         )
         .subscribe((resp) => {
           this.cursoService.showMessage('Curso cadastrado com sucesso!');
-          this.router.navigate(['/cursoProfessor']);
+          this.router.navigate(['/curso']);
         });
     } else {
       this.cursoService.showMessage('Há campos inválidos no formulário', true);
@@ -63,6 +63,6 @@ export class CursoCreateComponent implements OnInit {
   }
 
   cancel(): void {
-    this.router.navigate(['/cursoProfessor']);
+    this.router.navigate(['/curso']);
   }
 }

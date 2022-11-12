@@ -4,9 +4,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { CursoCreateComponent } from './pages/curso/curso-create/curso-create.component';
-import { ProfessorCursoComponent } from './pages/curso/curso-list/professor-curso.component';
+import { CursoComponent } from './pages/curso/curso-list/curso.component';
 import { LoginComponent } from './pages/login/login.component';
-import { ProfessorHomeComponent } from './pages/home/home.component';
+import { HomeComponent } from './pages/home/home.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -16,11 +16,11 @@ const routes: Routes = [
     canActivate: [AuthenticationGuard],
     canActivateChild: [AuthenticationGuard],
     children: [
-      { path: '', component: ProfessorHomeComponent },
+      { path: '', component: HomeComponent },
       {
-        path: 'cursoProfessor',
+        path: 'curso',
         children: [
-          { path: '', component: ProfessorCursoComponent },
+          { path: '', component: CursoComponent },
           { path: 'create', component: CursoCreateComponent },
         ],
       },

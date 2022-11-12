@@ -92,7 +92,7 @@ export class CursoComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   navigateToCursoCreate(): void {
-    this.router.navigate(['cursoProfessor/create']);
+    this.router.navigate(['curso/create']);
   }
 
   openDeleteDialog(curso: Curso): void {
