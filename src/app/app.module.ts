@@ -26,6 +26,9 @@ import { FooterComponent } from './layout/footer/footer.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
 import { PageComponent } from './layout/page/page.component';
+import { AulaCreateComponent } from './pages/aula/aula-create/aula-create.component';
+import { AulaDeleteComponent } from './pages/aula/aula-delete/aula-delete.component';
+import { AulaComponent } from './pages/aula/aula-list/aula.component';
 import { AvaliacaoCreateComponent } from './pages/avaliacao/avaliacao-create/avaliacao-create.component';
 import { AvaliacaoDeleteComponent } from './pages/avaliacao/avaliacao-delete/avaliacao-delete.component';
 import { AvaliacaoComponent } from './pages/avaliacao/avaliacao-list/avaliacao.component';
@@ -51,6 +54,9 @@ import { LoginComponent } from './pages/login/login.component';
     AvaliacaoComponent,
     AvaliacaoCreateComponent,
     AvaliacaoDeleteComponent,
+    AulaComponent,
+    AulaCreateComponent,
+    AulaDeleteComponent,
   ],
   imports: [
     MatSnackBarModule,

@@ -15,35 +15,30 @@ import {
   Subscription,
   switchMap,
 } from 'rxjs';
-import { Avaliacao } from 'src/app/models/avaliacao.model';
+import { Aula } from 'src/app/models/aula.model';
 
-import { AvaliacaoService } from '../../services/avaliacao.service';
-import { AvaliacaoDeleteComponent } from '../avaliacao-delete/avaliacao-delete.component';
+import { AulaDeleteComponent } from '../aula-delete/aula-delete.component';
+import { AulaService } from './../../services/aula.service';
 
 @Component({
-  selector: 'app-avaliacao',
-  templateUrl: './avaliacao.component.html',
-  styleUrls: ['./avaliacao.component.scss'],
+  selector: 'app-aula',
+  templateUrl: './aula.component.html',
+  styleUrls: ['./aula.component.scss'],
 })
-export class AvaliacaoComponent implements OnInit, AfterViewInit, OnDestroy {
+export class AulaComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   isLoadingResults: boolean = true;
-  data: Avaliacao[] = [];
+  data: Aula[] = [];
   resultsLenght: number = 0;
   subscriptions: Subscription[] = [];
-  displayedColumns: string[] = [
-    'id',
-    'descricao',
-    'metodoAvaliativo',
-    'modulo',
-  ];
+  displayedColumns: string[] = ['id', 'descricao', 'duracao', 'modulo'];
   form!: FormGroup;
   refresh: Subject<boolean> = new Subject();
 
   constructor(
     private readonly router: Router,
-    private readonly avaliacaoService: AvaliacaoService,
+    private readonly aulaService: AulaService,
     private readonly fb: FormBuilder,
     private readonly dialog: MatDialog
   ) {}
@@ -70,7 +65,7 @@ export class AvaliacaoComponent implements OnInit, AfterViewInit, OnDestroy {
         switchMap(() => {
           this.isLoadingResults = true;
           const search = this.form.get('search')?.value;
-          return this.avaliacaoService
+          return this.aulaService
             .list(this.paginator.pageIndex + 1, this.paginator.pageSize, search)
             .pipe(catchError(() => of(null)));
         }),
@@ -91,20 +86,20 @@ export class AvaliacaoComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
-  navigateToAvaliacaoCreate(): void {
-    this.router.navigate(['avaliacao/create']);
+  navigateToCursoCreate(): void {
+    this.router.navigate(['curso/create']);
   }
 
-  openDeleteDialog(avaliacao: Avaliacao): void {
-    const dialogRef = this.dialog.open(AvaliacaoDeleteComponent, {
-      data: avaliacao,
+  openDeleteDialog(aula: Aula): void {
+    const dialogRef = this.dialog.open(AulaDeleteComponent, {
+      data: aula,
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.avaliacaoService.delete(avaliacao.id as number).subscribe(() => {
+        this.aulaService.delete(aula.id as number).subscribe(() => {
           this.paginator.firstPage;
           this.refresh.next(true);
-          this.avaliacaoService.showMessage('Avaliação excluída com sucesso!');
+          this.aulaService.showMessage('Curso excluído com sucesso!');
         });
       }
     });
