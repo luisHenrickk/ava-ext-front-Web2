@@ -1,0 +1,47 @@
+<mat-card>
+  <mat-card-title>Cadastrar nova avaliação</mat-card-title>
+
+  <form [formGroup]="form">
+    <mat-form-field appearance="outline" style="width: 100%">
+      <mat-label>Descrição:</mat-label>
+      <input
+        matInput
+        name="descricao"
+        placeholder="Descrição da avaliacao"
+        formControlName="descricao"
+      />
+      <mat-error *ngIf="form.get('descricao')?.hasError('required')">
+        Campo obrigatório
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 100%">
+      <mat-label>Metodo avaliativo:</mat-label>
+      <input
+        matInput
+        name="metodoAvaliativo"
+        placeholder="Metodo avaliativo"
+        formControlName="metodoAvaliativo"
+      />
+      <mat-error *ngIf="form.get('metodoAvaliativo')?.hasError('required')">
+        Campo obrigatório
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Modulo</mat-label>
+      <mat-select name="modulo" formControlName="avaliacao">
+        <mat-option *ngFor="let modulo of modulos" [value]="modulo">
+          {{ modulo.descricao }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('modulo')?.hasError('required')">
+        Campo obrigatório
+      </mat-error>
+    </mat-form-field>
+  </form>
+
+  <button mat-raised-button (click)="save()">Cadastrar</button>
+
+  <button mat-raised-button (click)="cancel()">Cancelar</button>
+</mat-card>
