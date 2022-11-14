@@ -5,30 +5,32 @@ import { Observable } from 'rxjs';
 import { ResponseDataList } from 'src/app/models/shared';
 import { environment } from 'src/environments/environment';
 
-import { Aluno } from './../../models/aluno.model';
+import { Arquivo } from './../../models/arquivo.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AlunoService {
-  baseApi: string = '/aluno';
+export class ArquivoService {
+  baseApi: string = '/arquivo';
   constructor(
     private readonly snackBar: MatSnackBar,
     private readonly http: HttpClient
   ) {}
 
-  create(aluno: Aluno): Observable<Aluno> {
-    return this.http.post<Aluno>(environment.baseURL + this.baseApi, aluno);
+  create(arquivo: Arquivo): Observable<Arquivo> {
+    return this.http.post<Arquivo>(environment.baseURL + this.baseApi, arquivo);
   }
 
-  findById(id: number): Observable<Aluno> {
-    return this.http.get<Aluno>(environment.baseURL + this.baseApi + `/${id}`);
+  findById(id: number): Observable<Arquivo> {
+    return this.http.get<Arquivo>(
+      environment.baseURL + this.baseApi + `/${id}`
+    );
   }
 
-  update(id: number, aluno: Aluno): Observable<Aluno> {
-    return this.http.patch<Aluno>(
+  update(id: number, arquivo: Arquivo): Observable<Arquivo> {
+    return this.http.patch<Arquivo>(
       environment.baseURL + this.baseApi + `/${id}`,
-      aluno
+      arquivo
     );
   }
 
@@ -42,12 +44,12 @@ export class AlunoService {
     page: number,
     limit: number,
     search?: string
-  ): Observable<ResponseDataList<Aluno>> {
+  ): Observable<ResponseDataList<Arquivo>> {
     let params = new HttpParams().set('page', page).set('limit', limit);
     if (search?.trim()) {
       params = params.set('search', search.trim());
     }
-    return this.http.get<ResponseDataList<Aluno>>(
+    return this.http.get<ResponseDataList<Arquivo>>(
       environment.baseURL + this.baseApi,
       { params }
     );

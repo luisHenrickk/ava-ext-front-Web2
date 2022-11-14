@@ -3,32 +3,36 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { ResponseDataList } from 'src/app/models/shared';
+import { Telefone } from 'src/app/models/telefone.model';
 import { environment } from 'src/environments/environment';
-
-import { Aluno } from './../../models/aluno.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AlunoService {
-  baseApi: string = '/aluno';
+export class TelefoneService {
+  baseApi: string = '/telefone';
   constructor(
     private readonly snackBar: MatSnackBar,
     private readonly http: HttpClient
   ) {}
 
-  create(aluno: Aluno): Observable<Aluno> {
-    return this.http.post<Aluno>(environment.baseURL + this.baseApi, aluno);
+  create(telefone: Telefone): Observable<Telefone> {
+    return this.http.post<Telefone>(
+      environment.baseURL + this.baseApi,
+      telefone
+    );
   }
 
-  findById(id: number): Observable<Aluno> {
-    return this.http.get<Aluno>(environment.baseURL + this.baseApi + `/${id}`);
+  findById(id: number): Observable<Telefone> {
+    return this.http.get<Telefone>(
+      environment.baseURL + this.baseApi + `/${id}`
+    );
   }
 
-  update(id: number, aluno: Aluno): Observable<Aluno> {
-    return this.http.patch<Aluno>(
+  update(id: number, telefone: Telefone): Observable<Telefone> {
+    return this.http.patch<Telefone>(
       environment.baseURL + this.baseApi + `/${id}`,
-      aluno
+      telefone
     );
   }
 
@@ -42,12 +46,12 @@ export class AlunoService {
     page: number,
     limit: number,
     search?: string
-  ): Observable<ResponseDataList<Aluno>> {
+  ): Observable<ResponseDataList<Telefone>> {
     let params = new HttpParams().set('page', page).set('limit', limit);
     if (search?.trim()) {
       params = params.set('search', search.trim());
     }
-    return this.http.get<ResponseDataList<Aluno>>(
+    return this.http.get<ResponseDataList<Telefone>>(
       environment.baseURL + this.baseApi,
       { params }
     );
