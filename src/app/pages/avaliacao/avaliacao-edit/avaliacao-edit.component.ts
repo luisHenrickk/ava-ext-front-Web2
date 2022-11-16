@@ -1,54 +1,47 @@
-import { AlunoService } from './../../services/aluno.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError } from 'rxjs';
-
+import { Avaliacao } from 'src/app/models/avaliacao.model';
 import { AvaliacaoService } from '../../services/avaliacao.service';
-import { ModuloService } from '../../services/modulo.service';
-import { Avaliacao } from './../../../models/avaliacao.model';
-import { Modulo } from './../../../models/modulo.model';
-import { Aluno } from 'src/app/models/aluno.model';
-import { Curso } from 'src/app/models/curso.model';
 
 @Component({
-  selector: 'app-avaliacao-create',
-  templateUrl: './avaliacao-create.component.html',
-  styleUrls: ['./avaliacao-create.component.scss'],
+  selector: 'app-avaliacao-edit',
+  templateUrl: './avaliacao-edit.component.html',
+  styleUrls: ['./avaliacao-edit.component.scss'],
 })
-export class AvaliacaoCreateComponent implements OnInit {
+export class AvaliacaoEditComponent implements OnInit {
   id!: number;
-  modulo!: Modulo;
+  avaliacao!: Avaliacao;
   form: FormGroup = new FormGroup({});
   constructor(
     private readonly router: Router,
     private readonly avaliacaoService: AvaliacaoService,
-    private readonly moduloService: ModuloService,
     private readonly fb: FormBuilder,
     private readonly route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.id = +this.route.snapshot.paramMap.get('id')!;
+    this.id = +this.route.snapshot.paramMap.get('idAvaliacao')!;
     this.form = this.fb.group({
       descricao: [null, [Validators.required]],
       metodoAvaliativo: [null, [Validators.required]],
     });
-    this.moduloService.findById(this.id).subscribe((resp) => {
-      this.modulo = resp;
+    this.avaliacaoService.findById(this.id).subscribe((resp) => {
+      this.avaliacao = resp;
+      this.form.patchValue(this.avaliacao);
     });
   }
   save(): void {
     this.form.markAllAsTouched();
     if (this.form.valid) {
       const avaliacao: Avaliacao = this.form.value;
-      avaliacao.modulo = this.modulo;
       this.avaliacaoService
-        .create(avaliacao)
+        .update(this.id, avaliacao)
         .pipe(
           catchError((err) => {
             this.avaliacaoService.showMessage(
-              'Avaliação não pode ser cadastrada!',
+              'Avaliação não pode ser atualizada!',
               true
             );
             return err;
@@ -56,9 +49,11 @@ export class AvaliacaoCreateComponent implements OnInit {
         )
         .subscribe((resp) => {
           this.avaliacaoService.showMessage(
-            'Avaliação cadastrada com sucesso!'
+            'Avaliação atualizada com sucesso!'
           );
-          this.router.navigate([`/avaliacao/${this.id}`]);
+          this.router.navigate([
+            `/avaliacao/${this.route.snapshot.paramMap.get('id')!}`,
+          ]);
         });
     } else {
       this.avaliacaoService.showMessage(
@@ -69,6 +64,8 @@ export class AvaliacaoCreateComponent implements OnInit {
   }
 
   cancel(): void {
-    this.router.navigate([`/avaliacao/${this.id}`]);
+    this.router.navigate([
+      `/avaliacao/${this.route.snapshot.paramMap.get('id')!}`,
+    ]);
   }
 }

@@ -1,0 +1,47 @@
+<mat-card>
+  <mat-card-title>Atualizar curso</mat-card-title>
+
+  <form [formGroup]="form">
+    <mat-form-field appearance="outline" style="width: 100%">
+      <mat-label>Nome:</mat-label>
+      <input
+        matInput
+        name="descricao"
+        placeholder="Nome do curso"
+        formControlName="descricao"
+      />
+      <mat-error *ngIf="form.get('descricao')?.hasError('required')">
+        Campo obrigatório
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 100%">
+      <mat-label>Área:</mat-label>
+      <input
+        matInput
+        name="area"
+        placeholder="Área do curso"
+        formControlName="area"
+      />
+      <mat-error *ngIf="form.get('area')?.hasError('required')">
+        Campo obrigatório
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Professor</mat-label>
+      <mat-select name="professor" formControlName="professor">
+        <mat-option *ngFor="let professor of professores" [value]="professor">
+          {{ professor.nome }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('professsor')?.hasError('required')">
+        Campo obrigatório
+      </mat-error>
+    </mat-form-field>
+  </form>
+
+  <button mat-raised-button (click)="save()">Salvar</button>
+
+  <button mat-raised-button (click)="cancel()">Cancelar</button>
+</mat-card>

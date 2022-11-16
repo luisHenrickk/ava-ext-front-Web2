@@ -1,6 +1,7 @@
 .sidenav {
   background:linear-gradient(180deg, rgb(0, 0, 0) 0%, rgb(34, 34, 34) 35%, rgb(58, 57, 57) 100%);
   width: 200px;
+  height: 100%;
 
   a {
     color: #FFFFFF;
@@ -13,5 +14,6 @@
   .content {
     padding: 16px;
     background-color: #FFFFFF;
+    height: calc(100vh - 150px);
   }
 }

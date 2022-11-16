@@ -25,6 +25,10 @@ export class AlunoService {
     return this.http.get<Aluno>(environment.baseURL + this.baseApi + `/${id}`);
   }
 
+  findByCurso(idCurso: number): Observable<Aluno[]> {
+    return this.http.get<Aluno[]>(environment.baseURL + `/curso/${idCurso}`);
+  }
+
   update(id: number, aluno: Aluno): Observable<Aluno> {
     return this.http.patch<Aluno>(
       environment.baseURL + this.baseApi + `/${id}`,

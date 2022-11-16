@@ -3,54 +3,52 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError } from 'rxjs';
 import { Aula } from 'src/app/models/aula.model';
-import { Modulo } from 'src/app/models/modulo.model';
-
 import { AulaService } from '../../services/aula.service';
-import { ModuloService } from '../../services/modulo.service';
 
 @Component({
-  selector: 'app-aula-create',
-  templateUrl: './aula-create.component.html',
-  styleUrls: ['./aula-create.component.scss'],
+  selector: 'app-aula-edit',
+  templateUrl: './aula-edit.component.html',
+  styleUrls: ['./aula-edit.component.scss'],
 })
-export class AulaCreateComponent implements OnInit {
+export class AulaEditComponent implements OnInit {
   id!: number;
-  modulo!: Modulo;
+  aula!: Aula;
   form: FormGroup = new FormGroup({});
   constructor(
     private readonly router: Router,
     private readonly aulaService: AulaService,
-    private readonly moduloService: ModuloService,
     private readonly fb: FormBuilder,
     private readonly route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.id = +this.route.snapshot.paramMap.get('id')!;
+    this.id = +this.route.snapshot.paramMap.get('idAula')!;
     this.form = this.fb.group({
       descricao: [null, [Validators.required]],
       duracao: [null, [Validators.required]],
     });
-    this.moduloService.findById(this.id).subscribe((resp) => {
-      this.modulo = resp;
+    this.aulaService.findById(this.id).subscribe((resp) => {
+      this.aula = resp;
+      this.form.patchValue(this.aula);
     });
   }
   save(): void {
     this.form.markAllAsTouched();
     if (this.form.valid) {
       const aula: Aula = this.form.value;
-      aula.modulo = this.modulo;
       this.aulaService
-        .create(aula)
+        .update(this.id, aula)
         .pipe(
           catchError((err) => {
-            this.aulaService.showMessage('Aula não pode ser cadastrada!', true);
+            this.aulaService.showMessage('Aula não pode ser atualizada!', true);
             return err;
           })
         )
         .subscribe((resp) => {
-          this.aulaService.showMessage('Aula cadastrada com sucesso!');
-          this.router.navigate([`/aula/${this.id}`]);
+          this.aulaService.showMessage('Aula atualizada com sucesso!');
+          this.router.navigate([
+            `/aula/${this.route.snapshot.paramMap.get('id')!}`,
+          ]);
         });
     } else {
       this.aulaService.showMessage('Há campos inválidos no formulário', true);
@@ -58,6 +56,6 @@ export class AulaCreateComponent implements OnInit {
   }
 
   cancel(): void {
-    this.router.navigate([`/aula/${this.id}`]);
+    this.router.navigate([`/aula/${this.route.snapshot.paramMap.get('id')!}`]);
   }
 }

@@ -43,7 +43,7 @@
         <th mat-header-cell *matHeaderCellDef>Ações</th>
         <td mat-cell *matCellDef="let row">
           <a
-            routerLink="/cities/{{ row.id }}/edit"
+            routerLink="/modulo/{{ id }}/{{ row.id }}/edit"
             class="edit"
             *ngIf="checkRole(['admin', 'professor'])"
           >

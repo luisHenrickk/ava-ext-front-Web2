@@ -1,5 +1,5 @@
 <mat-card>
-  <mat-card-title>Cadastrar novo professor</mat-card-title>
+  <mat-card-title>Atualizar professor</mat-card-title>
 
   <form [formGroup]="form">
     <mat-form-field appearance="outline" style="width: 100%">
@@ -21,7 +21,7 @@
         matInput
         type="email"
         name="email"
-        placeholder="E-mail do aluno"
+        placeholder="E-mail do professor"
         formControlName="email"
       />
       <mat-error *ngIf="form.get('email')?.hasError('required')">
@@ -47,6 +47,7 @@
       <mat-label>Data de Nascimento:</mat-label>
       <input
         matInput
+        type="date"
         name="dataNasc"
         placeholder="Ex: 26/09/2002"
         formControlName="dataNasc"
@@ -85,7 +86,7 @@
       </mat-error>
     </mat-form-field>
   </form>
-  <button mat-raised-button (click)="save()">Cadastrar</button>
+  <button mat-raised-button (click)="save()">Salvar</button>
 
   <button mat-raised-button (click)="cancel()">Cancelar</button>
 </mat-card>

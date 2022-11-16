@@ -13,7 +13,10 @@
       >
 
       <mat-divider></mat-divider>
-      <a mat-list-item routerLink=""
+      <a
+        mat-list-item
+        routerLink="/perfil"
+        *ngIf="checkRole(['aluno', 'professor'])"
         ><i class="material-icons">account_box</i> Meu Perfil</a
       >
 
@@ -33,7 +36,11 @@
       >
 
       <mat-divider></mat-divider>
-      <a mat-list-item routerLink=""
+      <a
+        mat-list-item
+        routerLink="/login"
+        class="exit_button"
+        (click)="logout()"
         ><i class="material-icons">meeting_room</i> Logout</a
       >
     </mat-nav-list>

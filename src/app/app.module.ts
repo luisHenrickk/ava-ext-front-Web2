@@ -48,6 +48,12 @@ import { ModuloCreateComponent } from './pages/modulo/modulo-create/modulo-creat
 import { ModuloDeleteComponent } from './pages/modulo/modulo-delete/modulo-delete.component';
 import { AlunoEditComponent } from './pages/aluno/aluno-edit/aluno-edit.component';
 import { AlunoCursoComponent } from './pages/aluno/aluno-curso/aluno-curso.component';
+import { AulaEditComponent } from './pages/aula/aula-edit/aula-edit.component';
+import { AvaliacaoEditComponent } from './pages/avaliacao/avaliacao-edit/avaliacao-edit.component';
+import { CursoEditComponent } from './pages/curso/curso-edit/curso-edit.component';
+import { ModuloEditComponent } from './pages/modulo/modulo-edit/modulo-edit.component';
+import { ProfessorEditComponent } from './pages/professor/professor-edit/professor-edit.component';
+import { PerfilComponent } from './pages/perfil/perfil/perfil.component';
 
 @NgModule({
   declarations: [
@@ -79,6 +85,12 @@ import { AlunoCursoComponent } from './pages/aluno/aluno-curso/aluno-curso.compo
     ModuloDeleteComponent,
     AlunoEditComponent,
     AlunoCursoComponent,
+    AulaEditComponent,
+    AvaliacaoEditComponent,
+    CursoEditComponent,
+    ModuloEditComponent,
+    ProfessorEditComponent,
+    PerfilComponent,
   ],
   imports: [
     MatSnackBarModule,

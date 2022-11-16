@@ -1,0 +1,35 @@
+<mat-card>
+  <mat-card-title>Atualizar aula</mat-card-title>
+
+  <form [formGroup]="form">
+    <mat-form-field appearance="outline" style="width: 100%">
+      <mat-label>Descrição:</mat-label>
+      <input
+        matInput
+        name="descricao"
+        placeholder="Nome da Aula"
+        formControlName="descricao"
+      />
+      <mat-error *ngIf="form.get('descricao')?.hasError('required')">
+        Campo obrigatório
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 100%">
+      <mat-label>Duração:</mat-label>
+      <input
+        matInput
+        name="duracao"
+        placeholder="Duracao da aula"
+        formControlName="duracao"
+      />
+      <mat-error *ngIf="form.get('duracao')?.hasError('required')">
+        Campo obrigatório
+      </mat-error>
+    </mat-form-field>
+  </form>
+
+  <button mat-raised-button (click)="save()">Salvar</button>
+
+  <button mat-raised-button (click)="cancel()">Cancelar</button>
+</mat-card>

@@ -9,16 +9,22 @@ import { AlunoCreateComponent } from './pages/aluno/aluno-create/aluno-create.co
 import { AlunoEditComponent } from './pages/aluno/aluno-edit/aluno-edit.component';
 import { AlunoComponent } from './pages/aluno/aluno-list/aluno.component';
 import { AulaCreateComponent } from './pages/aula/aula-create/aula-create.component';
+import { AulaEditComponent } from './pages/aula/aula-edit/aula-edit.component';
 import { AulaComponent } from './pages/aula/aula-list/aula.component';
 import { AvaliacaoCreateComponent } from './pages/avaliacao/avaliacao-create/avaliacao-create.component';
+import { AvaliacaoEditComponent } from './pages/avaliacao/avaliacao-edit/avaliacao-edit.component';
 import { AvaliacaoComponent } from './pages/avaliacao/avaliacao-list/avaliacao.component';
 import { CursoCreateComponent } from './pages/curso/curso-create/curso-create.component';
+import { CursoEditComponent } from './pages/curso/curso-edit/curso-edit.component';
 import { CursoComponent } from './pages/curso/curso-list/curso.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ModuloCreateComponent } from './pages/modulo/modulo-create/modulo-create.component';
+import { ModuloEditComponent } from './pages/modulo/modulo-edit/modulo-edit.component';
 import { ModuloComponent } from './pages/modulo/modulo-list/modulo.component';
+import { PerfilComponent } from './pages/perfil/perfil/perfil.component';
 import { ProfessorCreateComponent } from './pages/professor/professor-create/professor-create.component';
+import { ProfessorEditComponent } from './pages/professor/professor-edit/professor-edit.component';
 import { ProfessorListComponent } from './pages/professor/professor-list/professor-list.component';
 
 const routes: Routes = [
@@ -30,6 +36,7 @@ const routes: Routes = [
     canActivateChild: [AuthenticationGuard],
     children: [
       { path: '', component: HomeComponent },
+      { path: 'perfil', component: PerfilComponent },
       {
         path: 'curso',
         children: [
@@ -37,6 +44,12 @@ const routes: Routes = [
           {
             path: 'create',
             component: CursoCreateComponent,
+            canActivate: [RoleGuard],
+            data: { role: [Role.Admin] },
+          },
+          {
+            path: ':id/edit',
+            component: CursoEditComponent,
             canActivate: [RoleGuard],
             data: { role: [Role.Admin] },
           },
@@ -52,6 +65,12 @@ const routes: Routes = [
             canActivate: [RoleGuard],
             data: { role: [Role.Admin, Role.Professor] },
           },
+          {
+            path: ':idModulo/edit',
+            component: ModuloEditComponent,
+            canActivate: [RoleGuard],
+            data: { role: [Role.Admin, Role.Professor] },
+          },
         ],
       },
       {
@@ -61,6 +80,12 @@ const routes: Routes = [
           {
             path: 'create',
             component: AulaCreateComponent,
+            canActivate: [RoleGuard],
+            data: { role: [Role.Admin, Role.Professor] },
+          },
+          {
+            path: ':idAula/edit',
+            component: AulaEditComponent,
             canActivate: [RoleGuard],
             data: { role: [Role.Admin, Role.Professor] },
           },
@@ -80,6 +105,12 @@ const routes: Routes = [
             component: ProfessorCreateComponent,
             canActivate: [RoleGuard],
             data: { role: [Role.Admin] },
+          },
+          {
+            path: 'id:/edit',
+            component: ProfessorEditComponent,
+            canActivate: [RoleGuard],
+            data: { role: [Role.Admin, Role.Professor] },
           },
         ],
       },
@@ -102,7 +133,7 @@ const routes: Routes = [
             path: ':id/edit',
             component: AlunoEditComponent,
             canActivate: [RoleGuard],
-            data: { role: [Role.Admin] },
+            data: { role: [Role.Admin, Role.Aluno] },
           },
         ],
       },
@@ -113,6 +144,12 @@ const routes: Routes = [
           {
             path: 'create',
             component: AvaliacaoCreateComponent,
+            canActivate: [RoleGuard],
+            data: { role: [Role.Admin, Role.Professor] },
+          },
+          {
+            path: ':idAvaliacao/edit',
+            component: AvaliacaoEditComponent,
             canActivate: [RoleGuard],
             data: { role: [Role.Admin, Role.Professor] },
           },

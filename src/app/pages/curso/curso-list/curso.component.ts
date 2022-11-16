@@ -83,16 +83,27 @@ export class CursoComponent implements OnInit, AfterViewInit, OnDestroy {
         map((data) => {
           this.isLoadingResults = false;
           if (data) {
+            const cursos: Curso[] = [];
             if (user?.role === Role.Admin) {
               this.resultsLenght = data.meta.totalItems;
               return data.items;
             }
-            const cursos: Curso[] = [];
-            data.items.forEach((element) => {
-              if (element.professor?.id === user?.id) {
-                cursos.push(element);
-              }
-            });
+            if (user?.role === Role.Professor) {
+              data.items.forEach((element) => {
+                if (element.professor?.id === user?.id) {
+                  cursos.push(element);
+                }
+              });
+            }
+            if (user?.role === Role.Aluno) {
+              data.items.forEach((element1) => {
+                element1.alunos?.forEach((element2) => {
+                  if (element2.id === user?.id) {
+                    cursos.push(element1);
+                  }
+                });
+              });
+            }
             this.resultsLenght = cursos.length;
             return cursos;
           }

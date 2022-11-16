@@ -1,0 +1,49 @@
+<mat-card>
+  <mat-card-title>Atualizar módulo</mat-card-title>
+
+  <form [formGroup]="form">
+    <mat-form-field appearance="outline" style="width: 100%">
+      <mat-label>Nome:</mat-label>
+      <input
+        matInput
+        name="desricao"
+        placeholder="Descrição do módulo"
+        formControlName="descricao"
+      />
+      <mat-error *ngIf="form.get('descricao')?.hasError('required')">
+        Campo obrigatório
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 100%">
+      <mat-label>Frequência Mínima:</mat-label>
+      <input
+        matInput
+        type="number"
+        name="frequenciaMinima"
+        placeholder="Ex: 70"
+        formControlName="frequenciaMinima"
+      />
+      <mat-error *ngIf="form.get('frequenciaMinima')?.hasError('required')">
+        Campo obrigatório
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 100%">
+      <mat-label>Nível de Dificuldade:</mat-label>
+      <input
+        matInput
+        name="nivel"
+        placeholder="Ex: Intermediário"
+        formControlName="nivel"
+      />
+      <mat-error *ngIf="form.get('nivel')?.hasError('required')">
+        Campo obrigatório
+      </mat-error>
+    </mat-form-field>
+  </form>
+
+  <button mat-raised-button (click)="save()">Salvar</button>
+
+  <button mat-raised-button (click)="cancel()">Cancelar</button>
+</mat-card>
