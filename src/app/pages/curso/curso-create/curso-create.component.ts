@@ -23,10 +23,8 @@ export class CursoCreateComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.professorService.list().subscribe((resp) => {
+    this.professorService.listArray().subscribe((resp) => {
       this.professores = resp;
-      console.log(this.professores);
-
       this.professores.sort((a: Professor, b: Professor) =>
         a.nome.localeCompare(b.nome)
       );
@@ -53,7 +51,7 @@ export class CursoCreateComponent implements OnInit {
             return err;
           })
         )
-        .subscribe((resp) => {
+        .subscribe(() => {
           this.cursoService.showMessage('Curso cadastrado com sucesso!');
           this.router.navigate(['/curso']);
         });

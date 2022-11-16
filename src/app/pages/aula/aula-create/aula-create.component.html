@@ -1,5 +1,5 @@
 <mat-card>
-  <mat-card-title>Cadastrar novo curso</mat-card-title>
+  <mat-card-title>Cadastrar nova aula</mat-card-title>
 
   <form [formGroup]="form">
     <mat-form-field appearance="outline" style="width: 100%">
@@ -24,18 +24,6 @@
         formControlName="duracao"
       />
       <mat-error *ngIf="form.get('duracao')?.hasError('required')">
-        Campo obrigatório
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Módulo</mat-label>
-      <mat-select name="modulo" formControlName="modulo">
-        <mat-option *ngFor="let modulo of modulos" [value]="modulo">
-          {{ modulo.descricao }}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="form.get('modulo')?.hasError('required')">
         Campo obrigatório
       </mat-error>
     </mat-form-field>

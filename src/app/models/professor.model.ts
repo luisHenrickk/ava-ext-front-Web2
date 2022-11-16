@@ -8,7 +8,7 @@ export interface Professor extends Usuario {
   cpf: string;
   dataNasc: string;
   graduacao: string;
-  telefones: Telefone[];
+  telefones?: Telefone[];
   cursos?: Curso[];
-  certificados: Certificado[];
+  certificados?: Certificado[];
 }

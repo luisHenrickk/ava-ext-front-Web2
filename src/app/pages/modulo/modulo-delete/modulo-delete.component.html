@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Exclusão de Módulo</h1>
+<div mat-dialog-content>
+  Tem certeza que deseja excluir o módulo "{{ data.descricao }}"?
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="false">Não</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Sim</button>
+</div>

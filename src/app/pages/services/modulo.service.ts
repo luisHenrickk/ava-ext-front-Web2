@@ -37,13 +37,28 @@ export class ModuloService {
     );
   }
 
-  list(): Observable<Modulo[]> {
+  listArray(): Observable<Modulo[]> {
     const params = new HttpParams().set('limit', '99');
     return this.http
       .get<ResponseDataList<Modulo>>(environment.baseURL + this.baseApi, {
         params,
       })
       .pipe(map((resp) => resp.items));
+  }
+
+  list(
+    page: number,
+    limit: number,
+    search?: string
+  ): Observable<ResponseDataList<Modulo>> {
+    let params = new HttpParams().set('page', page).set('limit', limit);
+    if (search?.trim()) {
+      params = params.set('search', search.trim());
+    }
+    return this.http.get<ResponseDataList<Modulo>>(
+      environment.baseURL + this.baseApi,
+      { params }
+    );
   }
 
   showMessage(msg: string, isError: boolean = false): void {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { catchError } from 'rxjs';
 
 import { AvaliacaoService } from '../../services/avaliacao.service';
@@ -14,34 +14,32 @@ import { Modulo } from './../../../models/modulo.model';
   styleUrls: ['./avaliacao-create.component.scss'],
 })
 export class AvaliacaoCreateComponent implements OnInit {
-  modulos: Modulo[] = [];
+  id!: number;
+  modulo!: Modulo;
   form: FormGroup = new FormGroup({});
   constructor(
     private readonly router: Router,
     private readonly avaliacaoService: AvaliacaoService,
     private readonly moduloService: ModuloService,
-    private readonly fb: FormBuilder
+    private readonly fb: FormBuilder,
+    private readonly route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.moduloService.list().subscribe((resp) => {
-      this.modulos = resp;
-      console.log(this.modulos);
-
-      this.modulos.sort((a: Modulo, b: Modulo) =>
-        a.descricao.localeCompare(b.descricao)
-      );
-    });
+    this.id = +this.route.snapshot.paramMap.get('id')!;
     this.form = this.fb.group({
       descricao: [null, [Validators.required]],
-      area: [null, [Validators.required]],
-      professor: [null, [Validators.required]],
+      metodoAvaliativo: [null, [Validators.required]],
+    });
+    this.moduloService.findById(this.id).subscribe((resp) => {
+      this.modulo = resp;
     });
   }
   save(): void {
     this.form.markAllAsTouched();
     if (this.form.valid) {
       const avaliacao: Avaliacao = this.form.value;
+      avaliacao.modulo = this.modulo;
       this.avaliacaoService
         .create(avaliacao)
         .pipe(
@@ -55,7 +53,7 @@ export class AvaliacaoCreateComponent implements OnInit {
         )
         .subscribe((resp) => {
           this.moduloService.showMessage('Avaliação cadastrada com sucesso!');
-          this.router.navigate(['/avaliacao']);
+          this.router.navigate([`/avaliacao/${this.id}`]);
         });
     } else {
       this.avaliacaoService.showMessage(
@@ -66,6 +64,6 @@ export class AvaliacaoCreateComponent implements OnInit {
   }
 
   cancel(): void {
-    this.router.navigate(['/avaliacao']);
+    this.router.navigate([`/avaliacao/${this.id}`]);
   }
 }

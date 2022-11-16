@@ -5,10 +5,10 @@ import { Telefone } from './telefone.model';
 import { Usuario } from './usuario.model';
 
 export interface Aluno extends Usuario {
-  name: string;
+  nome: string;
   cpf: string;
   dataNasc: string;
-  telefones: Telefone[];
+  telefones?: Telefone[];
   cursos?: Curso[];
   avaliacoes?: Avaliacao[];
   aulas?: Aula[];

@@ -1,8 +1,14 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   catchError,
   debounceTime,
@@ -16,6 +22,9 @@ import {
   switchMap,
 } from 'rxjs';
 import { Aula } from 'src/app/models/aula.model';
+import { Modulo } from 'src/app/models/modulo.model';
+import { Usuario } from 'src/app/models/usuario.model';
+import { AuthenticationService } from 'src/app/shared/authentication.service';
 
 import { AulaDeleteComponent } from '../aula-delete/aula-delete.component';
 import { AulaService } from './../../services/aula.service';
@@ -28,11 +37,14 @@ import { AulaService } from './../../services/aula.service';
 export class AulaComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  id!: number;
+  modulo!: Modulo;
+  user: Usuario | null = null;
   isLoadingResults: boolean = true;
   data: Aula[] = [];
   resultsLenght: number = 0;
   subscriptions: Subscription[] = [];
-  displayedColumns: string[] = ['id', 'descricao', 'duracao', 'modulo'];
+  displayedColumns: string[] = ['id', 'descricao', 'duracao', 'action'];
   form!: FormGroup;
   refresh: Subject<boolean> = new Subject();
 
@@ -40,10 +52,14 @@ export class AulaComponent implements OnInit, AfterViewInit, OnDestroy {
     private readonly router: Router,
     private readonly aulaService: AulaService,
     private readonly fb: FormBuilder,
-    private readonly dialog: MatDialog
+    private readonly dialog: MatDialog,
+    private readonly route: ActivatedRoute,
+    private readonly authenticationService: AuthenticationService
   ) {}
 
   ngOnInit(): void {
+    this.user = this.authenticationService.getCurrentUserValue();
+    this.id = +this.route.snapshot.paramMap.get('id')!;
     this.form = this.fb.group({
       search: [],
     });
@@ -86,8 +102,8 @@ export class AulaComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
-  navigateToCursoCreate(): void {
-    this.router.navigate(['curso/create']);
+  navigateToAulaCreate(): void {
+    this.router.navigate([`aula/${this.id}/create`]);
   }
 
   openDeleteDialog(aula: Aula): void {
@@ -99,9 +115,13 @@ export class AulaComponent implements OnInit, AfterViewInit, OnDestroy {
         this.aulaService.delete(aula.id as number).subscribe(() => {
           this.paginator.firstPage;
           this.refresh.next(true);
-          this.aulaService.showMessage('Curso excluído com sucesso!');
+          this.aulaService.showMessage('Aula excluída com sucesso!');
         });
       }
     });
+  }
+
+  checkRole(roles: string[]): boolean {
+    return !!this.user && roles.indexOf(this.user.role) > -1;
   }
 }

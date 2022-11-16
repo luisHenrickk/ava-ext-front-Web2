@@ -42,13 +42,28 @@ export class ProfessorService {
     );
   }
 
-  list(): Observable<Professor[]> {
+  listArray(): Observable<Professor[]> {
     const params = new HttpParams().set('limit', '99');
     return this.http
       .get<ResponseDataList<Professor>>(environment.baseURL + this.baseApi, {
         params,
       })
       .pipe(map((resp) => resp.items));
+  }
+
+  list(
+    page: number,
+    limit: number,
+    search?: string
+  ): Observable<ResponseDataList<Professor>> {
+    let params = new HttpParams().set('page', page).set('limit', limit);
+    if (search?.trim()) {
+      params = params.set('search', search.trim());
+    }
+    return this.http.get<ResponseDataList<Professor>>(
+      environment.baseURL + this.baseApi,
+      { params }
+    );
   }
 
   showMessage(msg: string, isError: boolean = false): void {

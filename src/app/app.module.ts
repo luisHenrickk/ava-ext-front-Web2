@@ -37,6 +37,17 @@ import { CursoDeleteComponent } from './pages/curso/curso-delete/curso-delete.co
 import { CursoComponent } from './pages/curso/curso-list/curso.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
+import { ProfessorListComponent } from './pages/professor/professor-list/professor-list.component';
+import { ProfessorCreateComponent } from './pages/professor/professor-create/professor-create.component';
+import { ProfessorDeleteComponent } from './pages/professor/professor-delete/professor-delete.component';
+import { AlunoComponent } from './pages/aluno/aluno-list/aluno.component';
+import { AlunoCreateComponent } from './pages/aluno/aluno-create/aluno-create.component';
+import { AlunoDeleteComponent } from './pages/aluno/aluno-delete/aluno-delete.component';
+import { ModuloComponent } from './pages/modulo/modulo-list/modulo.component';
+import { ModuloCreateComponent } from './pages/modulo/modulo-create/modulo-create.component';
+import { ModuloDeleteComponent } from './pages/modulo/modulo-delete/modulo-delete.component';
+import { AlunoEditComponent } from './pages/aluno/aluno-edit/aluno-edit.component';
+import { AlunoCursoComponent } from './pages/aluno/aluno-curso/aluno-curso.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +68,17 @@ import { LoginComponent } from './pages/login/login.component';
     AulaComponent,
     AulaCreateComponent,
     AulaDeleteComponent,
+    ProfessorListComponent,
+    ProfessorCreateComponent,
+    ProfessorDeleteComponent,
+    AlunoComponent,
+    AlunoCreateComponent,
+    AlunoDeleteComponent,
+    ModuloComponent,
+    ModuloCreateComponent,
+    ModuloDeleteComponent,
+    AlunoEditComponent,
+    AlunoCursoComponent,
   ],
   imports: [
     MatSnackBarModule,

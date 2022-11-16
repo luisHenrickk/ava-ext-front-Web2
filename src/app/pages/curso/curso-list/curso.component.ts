@@ -24,6 +24,8 @@ import {
 import { Curso } from 'src/app/models/curso.model';
 import { CursoService } from '../../services/curso.service';
 import { CursoDeleteComponent } from '../curso-delete/curso-delete.component';
+import { Role, Usuario } from 'src/app/models/usuario.model';
+import { AuthenticationService } from 'src/app/shared/authentication.service';
 
 @Component({
   selector: 'app-curso',
@@ -33,6 +35,7 @@ import { CursoDeleteComponent } from '../curso-delete/curso-delete.component';
 export class CursoComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  user: Usuario | null = null;
   isLoadingResults: boolean = true;
   data: Curso[] = [];
   resultsLenght: number = 0;
@@ -45,10 +48,12 @@ export class CursoComponent implements OnInit, AfterViewInit, OnDestroy {
     private readonly router: Router,
     private readonly cursoService: CursoService,
     private readonly fb: FormBuilder,
-    private readonly dialog: MatDialog
+    private readonly dialog: MatDialog,
+    private readonly authenticationService: AuthenticationService
   ) {}
 
   ngOnInit(): void {
+    this.user = this.authenticationService.getCurrentUserValue();
     this.form = this.fb.group({
       search: [],
     });
@@ -64,6 +69,7 @@ export class CursoComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
+    const user = this.authenticationService.getCurrentUserValue();
     const sub = merge(this.refresh, this.paginator.page)
       .pipe(
         startWith({}),
@@ -77,8 +83,18 @@ export class CursoComponent implements OnInit, AfterViewInit, OnDestroy {
         map((data) => {
           this.isLoadingResults = false;
           if (data) {
-            this.resultsLenght = data.meta.totalItems;
-            return data.items;
+            if (user?.role === Role.Admin) {
+              this.resultsLenght = data.meta.totalItems;
+              return data.items;
+            }
+            const cursos: Curso[] = [];
+            data.items.forEach((element) => {
+              if (element.professor?.id === user?.id) {
+                cursos.push(element);
+              }
+            });
+            this.resultsLenght = cursos.length;
+            return cursos;
           }
           return [];
         })
@@ -108,5 +124,9 @@ export class CursoComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       }
     });
+  }
+
+  checkRole(roles: string[]): boolean {
+    return !!this.user && roles.indexOf(this.user.role) > -1;
   }
 }

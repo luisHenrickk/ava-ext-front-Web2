@@ -12,7 +12,6 @@
         Inicio</a
       >
 
-      <!--POPO CAÇAR UMA IMAGEM-->
       <mat-divider></mat-divider>
       <a mat-list-item routerLink=""
         ><i class="material-icons">account_box</i> Meu Perfil</a
@@ -23,25 +22,16 @@
         ><i class="material-icons">business_center</i> Cursos</a
       >
 
-      <!--POPO CAÇAR UMA IMAGEM-->
-      <mat-divider></mat-divider>
-      <a mat-list-item routerLink=""
+      <mat-divider *ngIf="checkRole(['admin'])"></mat-divider>
+      <a mat-list-item routerLink="/professor" *ngIf="checkRole(['admin'])"
         ><i class="material-icons">assistant</i> Professores</a
       >
 
-      <!--POPO CAÇAR UMA IMAGEM-->
-      <mat-divider></mat-divider>
-      <a mat-list-item routerLink=""
+      <mat-divider *ngIf="checkRole(['admin'])"></mat-divider>
+      <a mat-list-item routerLink="/aluno" *ngIf="checkRole(['admin'])"
         ><i class="material-icons">person</i> Alunos</a
       >
 
-      <!--POPO CAÇAR UMA IMAGEM-->
-      <mat-divider></mat-divider>
-      <a mat-list-item routerLink="/avaliacao"
-        ><i class="material-icons">file_copy</i> Avaliações</a
-      >
-
-      <!--POPO CAÇAR UMA IMAGEM-->
       <mat-divider></mat-divider>
       <a mat-list-item routerLink=""
         ><i class="material-icons">meeting_room</i> Logout</a

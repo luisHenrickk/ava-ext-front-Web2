@@ -1,0 +1,26 @@
+<h1 mat-dialog-title>Matricular em Curso</h1>
+<div mat-dialog-content>
+  <form [formGroup]="form">
+    <mat-form-field appearance="outline">
+      <mat-label>Curso</mat-label>
+      <mat-select
+        [(ngModel)]="selectedValue"
+        name="curso"
+        formControlName="cursos"
+      >
+        <mat-option *ngFor="let curso of cursos" [value]="curso">
+          {{ curso.descricao }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('cursos')?.hasError('required')">
+        Campo obrigatório
+      </mat-error>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="false">Cancelar</button>
+  <button mat-button (click)="save()" [mat-dialog-close]="true" cdkFocusInitial>
+    Adicionar
+  </button>
+</div>

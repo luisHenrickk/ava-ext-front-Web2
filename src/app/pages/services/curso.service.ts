@@ -1,9 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
+import { Aluno } from 'src/app/models/aluno.model';
 import { Curso } from 'src/app/models/curso.model';
 import { ResponseDataList } from 'src/app/models/shared';
+import { Usuario } from 'src/app/models/usuario.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -31,16 +33,33 @@ export class CursoService {
     );
   }
 
+  addAluno(id: number, alunos: Aluno[]): Observable<Curso> {
+    return this.http.post<Curso>(
+      environment.baseURL + this.baseApi + `/${id}/alunos`,
+      alunos
+    );
+  }
+
   delete(id: number): Observable<boolean> {
     return this.http.delete<boolean>(
       environment.baseURL + this.baseApi + `/${id}`
     );
   }
 
+  listArray(): Observable<Curso[]> {
+    const params = new HttpParams().set('limit', '99');
+    return this.http
+      .get<ResponseDataList<Curso>>(environment.baseURL + this.baseApi, {
+        params,
+      })
+      .pipe(map((resp) => resp.items));
+  }
+
   list(
     page: number,
     limit: number,
-    search?: string
+    search?: string,
+    user?: Usuario
   ): Observable<ResponseDataList<Curso>> {
     let params = new HttpParams().set('page', page).set('limit', limit);
     if (search?.trim()) {

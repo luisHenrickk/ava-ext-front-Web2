@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { catchError } from 'rxjs';
 import { Aula } from 'src/app/models/aula.model';
 import { Modulo } from 'src/app/models/modulo.model';
@@ -14,34 +14,32 @@ import { ModuloService } from '../../services/modulo.service';
   styleUrls: ['./aula-create.component.scss'],
 })
 export class AulaCreateComponent implements OnInit {
-  modulos: Modulo[] = [];
+  id!: number;
+  modulo!: Modulo;
   form: FormGroup = new FormGroup({});
   constructor(
     private readonly router: Router,
     private readonly aulaService: AulaService,
     private readonly moduloService: ModuloService,
-    private readonly fb: FormBuilder
+    private readonly fb: FormBuilder,
+    private readonly route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.moduloService.list().subscribe((resp) => {
-      this.modulos = resp;
-      console.log(this.modulos);
-
-      this.modulos.sort((a: Modulo, b: Modulo) =>
-        a.descricao.localeCompare(b.descricao)
-      );
-    });
+    this.id = +this.route.snapshot.paramMap.get('id')!;
     this.form = this.fb.group({
       descricao: [null, [Validators.required]],
-      area: [null, [Validators.required]],
-      professor: [null, [Validators.required]],
+      duracao: [null, [Validators.required]],
+    });
+    this.moduloService.findById(this.id).subscribe((resp) => {
+      this.modulo = resp;
     });
   }
   save(): void {
     this.form.markAllAsTouched();
     if (this.form.valid) {
       const aula: Aula = this.form.value;
+      aula.modulo = this.modulo;
       this.aulaService
         .create(aula)
         .pipe(
@@ -52,7 +50,7 @@ export class AulaCreateComponent implements OnInit {
         )
         .subscribe((resp) => {
           this.moduloService.showMessage('Aula cadastrada com sucesso!');
-          this.router.navigate(['/aula']);
+          this.router.navigate([`/aula/${this.id}`]);
         });
     } else {
       this.aulaService.showMessage('Há campos inválidos no formulário', true);
@@ -60,6 +58,6 @@ export class AulaCreateComponent implements OnInit {
   }
 
   cancel(): void {
-    this.router.navigate(['/aula']);
+    this.router.navigate([`/aula/${this.id}`]);
   }
 }

@@ -1,0 +1,72 @@
+<mat-card>
+  <button mat-raised-button (click)="navigateToAlunoCreate()">
+    Novo Aluno
+  </button>
+</mat-card>
+<mat-card>
+  <mat-card-title> Lista de Alunos </mat-card-title>
+
+  <div class="container-table mat-elevation-z4">
+    <div [formGroup]="form">
+      <mat-form-field appearance="outline" class="search-input">
+        <mat-label>Pesquisar</mat-label>
+        <input
+          type="search"
+          matInput
+          name="search"
+          placeholder="Digite algo para pesquisar"
+          formControlName="search"
+        />
+      </mat-form-field>
+    </div>
+    <div class="loading-shade" *ngIf="isLoadingResults">
+      <mat-spinner> </mat-spinner>
+    </div>
+
+    <table mat-table [dataSource]="data">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="nome">
+        <th mat-header-cell *matHeaderCellDef>Nome</th>
+        <td mat-cell *matCellDef="let row">{{ row.nome }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Ações</th>
+        <td mat-cell *matCellDef="let row">
+          <a routerLink="/aluno/{{ row.id }}/edit" class="edit">
+            <i class="material-icons">edit</i>
+          </a>
+          <a
+            href="javascript:void(0)"
+            (click)="openDeleteDialog(row)"
+            class="delete"
+          >
+            <i class="material-icons">delete</i>
+          </a>
+          <a
+            href="javascript:void(0)"
+            (click)="openAddCursoDialog(row)"
+            class="addCurso"
+          >
+            <i class="material-icons">business_center</i>
+          </a>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator
+      #paginator
+      [length]="resultsLenght"
+      [pageIndex]="0"
+      [pageSize]="5"
+      [pageSizeOptions]="[5, 10, 20]"
+    ></mat-paginator>
+  </div>
+</mat-card>

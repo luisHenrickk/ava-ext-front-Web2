@@ -1,0 +1,49 @@
+<mat-card>
+  <mat-card-title>Atualizar aluno</mat-card-title>
+
+  <form [formGroup]="form">
+    <mat-form-field appearance="outline" style="width: 100%">
+      <mat-label>Nome:</mat-label>
+      <input
+        matInput
+        name="nome"
+        placeholder="Nome do aluno"
+        formControlName="nome"
+      />
+      <mat-error *ngIf="form.get('nome')?.hasError('required')">
+        Campo obrigatório
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 100%">
+      <mat-label>CPF:</mat-label>
+      <input
+        matInput
+        name="cpf"
+        pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
+        placeholder="Ex: 000.000.000-00"
+        formControlName="cpf"
+      />
+      <mat-error *ngIf="form.get('cpf')?.hasError('required')">
+        Campo obrigatório
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 100%">
+      <mat-label>Data de Nascimento:</mat-label>
+      <input
+        matInput
+        name="dataNasc"
+        placeholder="Ex: 26/09/2002"
+        formControlName="dataNasc"
+      />
+      <mat-error *ngIf="form.get('dataNasc')?.hasError('required')">
+        Campo obrigatório
+      </mat-error>
+    </mat-form-field>
+  </form>
+
+  <button mat-raised-button (click)="save()">Salvar</button>
+
+  <button mat-raised-button (click)="cancel()">Cancelar</button>
+</mat-card>

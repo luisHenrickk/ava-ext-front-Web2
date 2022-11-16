@@ -1,8 +1,14 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   catchError,
   debounceTime,
@@ -16,6 +22,9 @@ import {
   switchMap,
 } from 'rxjs';
 import { Avaliacao } from 'src/app/models/avaliacao.model';
+import { Modulo } from 'src/app/models/modulo.model';
+import { Usuario } from 'src/app/models/usuario.model';
+import { AuthenticationService } from 'src/app/shared/authentication.service';
 
 import { AvaliacaoService } from '../../services/avaliacao.service';
 import { AvaliacaoDeleteComponent } from '../avaliacao-delete/avaliacao-delete.component';
@@ -28,6 +37,9 @@ import { AvaliacaoDeleteComponent } from '../avaliacao-delete/avaliacao-delete.c
 export class AvaliacaoComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  id!: number;
+  modulo!: Modulo;
+  user: Usuario | null = null;
   isLoadingResults: boolean = true;
   data: Avaliacao[] = [];
   resultsLenght: number = 0;
@@ -36,7 +48,7 @@ export class AvaliacaoComponent implements OnInit, AfterViewInit, OnDestroy {
     'id',
     'descricao',
     'metodoAvaliativo',
-    'modulo',
+    'action',
   ];
   form!: FormGroup;
   refresh: Subject<boolean> = new Subject();
@@ -45,10 +57,14 @@ export class AvaliacaoComponent implements OnInit, AfterViewInit, OnDestroy {
     private readonly router: Router,
     private readonly avaliacaoService: AvaliacaoService,
     private readonly fb: FormBuilder,
-    private readonly dialog: MatDialog
+    private readonly dialog: MatDialog,
+    private readonly route: ActivatedRoute,
+    private readonly authenticationService: AuthenticationService
   ) {}
 
   ngOnInit(): void {
+    this.user = this.authenticationService.getCurrentUserValue();
+    this.id = +this.route.snapshot.paramMap.get('id')!;
     this.form = this.fb.group({
       search: [],
     });
@@ -92,7 +108,7 @@ export class AvaliacaoComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   navigateToAvaliacaoCreate(): void {
-    this.router.navigate(['avaliacao/create']);
+    this.router.navigate([`avaliacao/${this.id}/create`]);
   }
 
   openDeleteDialog(avaliacao: Avaliacao): void {
@@ -108,5 +124,9 @@ export class AvaliacaoComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       }
     });
+  }
+
+  checkRole(roles: string[]): boolean {
+    return !!this.user && roles.indexOf(this.user.role) > -1;
   }
 }

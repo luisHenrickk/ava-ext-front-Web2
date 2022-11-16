@@ -1,11 +1,8 @@
-<mat-card>
-  <button mat-raised-button (click)="navigateToCursoCreate()">
-    Novo Curso
-  </button>
+<mat-card *ngIf="checkRole(['admin', 'professor'])">
+  <button mat-raised-button (click)="navigateToAulaCreate()">Nova Aula</button>
 </mat-card>
 <mat-card>
-  <mat-card-title> Lista de Cursos </mat-card-title>
-  <mat-card-subtitle>Cursos criados por você</mat-card-subtitle>
+  <mat-card-title> Lista de Aulas </mat-card-title>
 
   <div class="container-table mat-elevation-z4">
     <div [formGroup]="form">
@@ -37,25 +34,33 @@
 
       <ng-container matColumnDef="duracao">
         <th mat-header-cell *matHeaderCellDef>Duração</th>
-        <td mat-cell *matCellDef="let row">{{ row.area }}</td>
-      </ng-container>
-      <ng-container matColumnDef="modulo">
-        <th mat-header-cell *matHeaderCellDef>Módulo</th>
-        <td mat-cell *matCellDef="let row">{{ row.area }}</td>
+        <td mat-cell *matCellDef="let row">{{ row.duracao }}</td>
       </ng-container>
 
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef>Ações</th>
         <td mat-cell *matCellDef="let row">
-          <a routerLink="/cities/{{ row.id }}/edit" class="edit">
+          <a
+            routerLink="/cities/{{ row.id }}/edit"
+            class="edit"
+            *ngIf="checkRole(['admin', 'professor'])"
+          >
             <i class="material-icons">edit</i>
           </a>
           <a
             href="javascript:void(0)"
             (click)="openDeleteDialog(row)"
             class="delete"
+            *ngIf="checkRole(['admin', 'professor'])"
           >
             <i class="material-icons">delete</i>
+          </a>
+          <a
+            href="javascript:void(0)"
+            class="presenca"
+            *ngIf="checkRole(['admin', 'professor'])"
+          >
+            <i class="material-icons">person_add</i>
           </a>
         </td>
       </ng-container>
