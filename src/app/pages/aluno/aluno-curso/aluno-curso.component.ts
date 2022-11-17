@@ -36,13 +36,10 @@ export class AlunoCursoComponent implements OnInit {
   }
 
   save(): void {
-    console.log(this.selectedValue);
-    const alunos: Aluno[] = [];
-    alunos.push(this.data);
     this.form.markAllAsTouched();
     if (this.form.valid) {
       this.cursoService
-        .addAluno(this.selectedValue.id, alunos)
+        .addAluno(this.selectedValue.id, this.data)
         .pipe(
           catchError((err) => {
             this.cursoService.showMessage(

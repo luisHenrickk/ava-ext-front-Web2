@@ -33,10 +33,10 @@ export class CursoService {
     );
   }
 
-  addAluno(id: number, alunos: Aluno[]): Observable<Curso> {
+  addAluno(id: number, aluno: Aluno): Observable<Curso> {
     return this.http.post<Curso>(
       environment.baseURL + this.baseApi + `/${id}/alunos`,
-      alunos
+      aluno
     );
   }
 
@@ -58,8 +58,7 @@ export class CursoService {
   list(
     page: number,
     limit: number,
-    search?: string,
-    user?: Usuario
+    search?: string
   ): Observable<ResponseDataList<Curso>> {
     let params = new HttpParams().set('page', page).set('limit', limit);
     if (search?.trim()) {
